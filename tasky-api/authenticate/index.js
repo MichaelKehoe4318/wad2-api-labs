@@ -25,4 +25,32 @@ const authenticate = async (request, response, next) => {
     }
 };
 
+export const registerUser = async (request, response, next) => {
+    try {
+        const { username, password } = request.body;
+
+        // Pass checker
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+        if (!passwordRegex.test(password)) {
+            return response.status(400).json({
+                error: 'Password must be at least 8 characters long and include at least one letter, one digit, and one special character.'
+            });
+        }
+
+        // Checking for existing usernames
+        const existingUser = await User.findByUserName(username);
+        if (existingUser) {
+            return response.status(400).json({ error: 'Username already in use' });
+        }
+
+        // Create new user
+        const newUser = new User({ username, password });
+        await newUser.save();
+
+        response.status(201).json({ message: 'User registered!' });
+    } catch (err) {
+        next(new Error(`Registration failed: ${err.message}`));
+    }
+};
+
 export default authenticate;
