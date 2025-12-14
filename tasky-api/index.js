@@ -1,3 +1,7 @@
+// other imports
+//... other imports
+import usersRouter from './api/users';
+import cors from 'cors';
 import './db';
 import dotenv from 'dotenv';
 import express from 'express';
@@ -18,11 +22,17 @@ const app = express();
 
 const port = process.env.PORT;
 
+// Enable CORS for all requests
+app.use(cors());
+
 app.use(express.json());
 
 app.use('/api/tasks', tasksRouter);
 
 app.use(errHandler);
+
+//Users router
+app.use('/api/users', usersRouter);
 
 app.listen(port, () => {
   console.info(`Server running at ${port}`);
