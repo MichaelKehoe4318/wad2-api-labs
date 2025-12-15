@@ -1,11 +1,11 @@
 import { BrowserRouter, Route, Routes, Navigate } from "react-router";
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import LoginPage from "./pages/loginPage";
-import SignupPage from "./pages/signupPage";
-import TasksPage from "./pages/tasksPage";
-import StartPage from "./pages/startPage";
-import ProfilePage from "./pages/profilePage";
+import LoginPage from "../../src/pages/loginPage";
+import SignupPage from "../../src/pages/signupPage";
+import TasksPage from "../../src/pages/tasksPage";
+import StartPage from "../../src/pages/startPage";
+import ProfilePage from "../../src/pages/profilePage";
 import './App.css';
 
 const queryClient = new QueryClient({
