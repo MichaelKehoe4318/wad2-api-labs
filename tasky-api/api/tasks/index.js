@@ -11,11 +11,15 @@ router.get('/', async (req, res) => {
 });
 
 
+
 // create a task
 router.post('/', asyncHandler(async (req, res) => {
-    const task = await Task(req.body).save();
+    const newTask = req.body;
+    newTask.userId = req.user._id;
+    const task = await Task(newTask).save();
     res.status(201).json(task);
 }));
+
 
 // Update Task
 router.put('/:id', async (req, res) => {
@@ -42,10 +46,13 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+
 // Get a user's tasks
-router.get('/user/:uid', async (req, res) => {
-    const tasks = await Task.find({ userId: `${req.params.uid}`});
+router.get('/', async (req, res) => {
+    console.log(req.user);
+    const tasks = await Task.find({ userId: `${req.user._id}`});
     res.status(200).json(tasks);
 });
+
 
 export default router;
